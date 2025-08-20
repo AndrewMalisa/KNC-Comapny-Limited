@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KNC Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #10b981;
+            --primary-dark: #065f46;
+            --secondary: #3b82f6;
+            --dark: #1f2937;
+            --light: #f9fafb;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        
+        .dark {
+            --primary: #34d399;
+            --primary-dark: #065f46;
+            --secondary: #60a5fa;
+            --dark: #f9fafb;
+            --light: #1f2937;
+        }
+        
+        .dark body {
+            background-color: #111827;
+            color: #f3f4f6;
+        }
+        
+        .dark .sidebar,
+        .dark .card,
+        .dark nav,
+        .dark footer {
+            background-color: #1f2937;
+            border-color: #374151;
+        }
+        
+        .dark .sidebar-item:hover::before {
+            background-color: var(--primary);
+        }
+        
+        .sidebar {
+            width: 280px;
+            transition: all 0.3s;
+        }
+        
+        .main-content {
+            margin-left: 280px;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-collapsed .sidebar {
+            width: 80px;
+        }
+        
+        .sidebar-collapsed .main-content {
+            margin-left: 80px;
+        }
+        
+        .sidebar-item {
+            position: relative;
+        }
+        
+        .sidebar-item:hover::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background-color: var(--primary);
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .card {
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+        }
+        
+        .table-responsive {
+            overflow-x: auto;
+        }
+        
+        /* Loading animation */
+        body:not(.loaded)::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.8);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        body:not(.loaded)::after {
+            content: '';
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #10b981;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10000;
+        }
+        
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        =======
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar fixed h-full bg-white shadow-md z-10">
+        <div class="p-4 flex items-center justify-between border-b border-gray-200">
+            <div class="flex items-center">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9e56a592-7153-4a6a-8b10-1f38de0f84a7.png" alt="KNC Company Limited logo" class="w-10 h-10 rounded-full object-cover">
+                <span class="ml-3 font-bold text-gray-800 sidebar-text">KNC Admin</span>
+            </div>
+            <button id="toggle-sidebar" class="text-gray-500 hover:text-gray-700">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <div class="p-4 space-y-1">
+            <a href="#" class="flex items-center px-3 py-3 text-sm font-medium rounded-md text-white bg-green-100 text-green-700 sidebar-item">
+                <i class="fas fa-tachometer-alt text-lg mr-3"></i>
+                <span class="sidebar-text">Dashboard</span>
+            </a>
+            
+            <a href="#" class="flex items-center px-3 py-3 text-sm font-medium rounded-md text-gray-600 hover:bg-green-50 hover:text-green-700 sidebar-item">
+                <i class="fas fa-box text-lg mr-3"></i>
+                <span class="sidebar-text">Products</span>
+            </a>
+            
+            <a href="#" class="flex items-center px-3 py-3 text-sm font-medium rounded-md text-gray-600 hover:bg-green-50 hover:text-green-700 sidebar-item">
+                <i class="fas fa-chart-line text-lg mr-3"></i>
+                <span class="sidebar-text">Analytics</span>
+            </a>
+            
+            <a href="#" class="flex items-center px-3 py-3 text-sm font-medium rounded-md text-gray-600 hover:bg-green-50 hover:text-green-700 sidebar-item">
+                <i class="fas fa-users text-lg mr-3"></i>
+                <span class="sidebar-text">Customers</span>
+                <span class="notification-badge bg-red-500 text-white rounded-full flex items-center justify-center ml-auto">3</span>
+            </a>
+            
+            <a href="#" class="flex items-center px-3 py-3 text-sm font-medium rounded-md text-gray-600 hover:bg-green-50 hover:text-green-700 sidebar-item">
+                <i class="fas fa-shopping-cart text-lg mr-3"></i>
+                <span class="sidebar-text">Orders</span>
+                <span class="notification-badge bg-yellow-500 text-white rounded-full flex items-center justify-center ml-auto">12</span>
+            </a>
+            
+            <a href="#" class="flex items-center px-3 py-3 text-sm font-medium rounded-md text-gray-600 hover:bg-green-50 hover:text-green-700 sidebar-item">
+                <i class="fas fa-warehouse text-lg mr-3"></i>
+                <span class="sidebar-text">Inventory</span>
+            </a>
+            
+            <a href="#" class="flex items-center px-3 py-3 text-sm font-medium rounded-md text-gray-600 hover:bg-green-50 hover:text-green-700 sidebar-item">
+                <i class="fas fa-cog text-lg mr-3"></i>
+                <span class="sidebar-text">Settings</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Navigation -->
+        <nav class="bg-white shadow-sm">
+            <div class="px-6 py-3 flex justify-between items-center">
+                <div class="flex items-center">
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-full text-gray-500 hover:bg-gray-100 mr-2">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <div class="relative">
+                        <input type="text" placeholder="Search products, orders..." 
+                               class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent w-64 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                               id="searchInput">
+                        <div class="absolute left-3 top-2.5 text-gray-400 dark:text-gray-300">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button class="p-2 rounded-full text-gray-500 hover:bg-gray-100 relative">
+                            <i class="fas fa-bell text-lg"></i>
+                            <span class="notification-badge bg-red-500 text-white rounded-full flex items-center justify-center">5</span>
+                        </button>
+                    </div>
+                    
+                    <div class="relative">
+                        <button class="p-2 rounded-full text-gray-500 hover:bg-gray-100 relative">
+                            <i class="fas fa-envelope text-lg"></i>
+                            <span class="notification-badge bg-blue-500 text-white rounded-full flex items-center justify-center">8</span>
+                        </button>
+                    </div>
+                    
+                    <div class="flex items-center ml-4">
+                        <div class="relative">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ef062342-08e2-4065-bf99-931b2d4ed98c.png" alt="Admin user profile picture" class="w-9 h-9 rounded-full object-cover">
+                        </div>
+                        <div class="ml-2 sidebar-text">
+                            <p class="text-sm font-medium text-gray-700">Admin User</p>
+                            <p class="text-xs text-gray-500">Super Admin</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <main class="p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold text-gray-800">Admin Dashboard</h1>
+                <div class="flex items-center space-x-2">
+                    <button class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <i class="fas fa-plus mr-2"></i>
+                        <span class="sidebar-text">Add Product</span>
+                    </button>
+                    <button class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <i class="fas fa-download mr-2"></i>
+                        <span class="sidebar-text">Export</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                <div class="card bg-white rounded-lg p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Total Revenue</p>
+                            <h3 class="text-2xl font-bold text-gray-800">TZS 12.8M</h3>
+                            <p class="text-sm text-green-600 mt-1">
+                                <i class="fas fa-arrow-up mr-1"></i>
+                                <span>12.5% from last month</span>
+                            </p>
+                        </div>
+                        <div class="p-3 rounded-full bg-green-100 text-green-600">
+                            <i class="fas fa-wallet text-lg"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card bg-white rounded-lg p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Total Products</p>
+                            <h3 class="text-2xl font-bold text-gray-800">86</h3>
+                            <p class="text-sm text-green-600 mt-1">
+                                <i class="fas fa-arrow-up mr-1"></i>
+                                <span>5 new added</span>
+                            </p>
+                        </div>
+                        <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                            <i class="fas fa-box text-lg"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card bg-white rounded-lg p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Total Orders</p>
+                            <h3 class="text-2xl font-bold text-gray-800">124</h3>
+                            <p class="text-sm text-red-600 mt-1">
+                                <i class="fas fa-arrow-down mr-1"></i>
+                                <span>3.4% from last month</span>
+                            </p>
+                        </div>
+                        <div class="p-3 rounded-full bg-yellow-100 text-yellow-600">
+                            <i class="fas fa-shopping-cart text-lg"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card bg-white rounded-lg p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Pending Orders</p>
+                            <h3 class="text-2xl font-bold text-gray-800">18</h3>
+                            <p class="text-sm text-green-600 mt-1">
+                                <i class="fas fa-arrow-down mr-1"></i>
+                                <span>6 processed today</span>
+                            </p>
+                        </div>
+                        <div class="p-3 rounded-full bg-red-100 text-red-600">
+                            <i class="fas fa-clock text-lg"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Orders -->
+            <div class="card bg-white rounded-lg p-6 mb-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold text-gray-800">Recent Orders</h2>
+                    <a href="#" class="text-sm text-green-600 hover:underline">View All</a>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#KN-2548</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">John Doe</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">May 15, 2024</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">TZS 245,000</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Completed</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <button class="text-green-600 hover:text-green-900 mr-2">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="text-blue-600 hover:text-blue-900">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#KN-2547</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Jane Smith</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">May 14, 2024</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">TZS 387,500</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Processing</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <button class="text-green-600 hover:text-green-900 mr-2">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="text-blue-600 hover:text-blue-900">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#KN-2546</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Robert Johnson</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">May 14, 2024</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">TZS 125,000</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Shipped</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <button class="text-green-600 hover:text-green-900 mr-2">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="text-blue-600 hover:text-blue-900">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#KN-2545</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Emily Davis</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">May 13, 2024</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">TZS 98,750</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Canceled</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <button class="text-green-600 hover:text-green-900 mr-2">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="text-blue-600 hover:text-blue-900">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#KN-2544</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Michael Wilson</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">May 12, 2024</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">TZS 256,300</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">Delivered</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <button class="text-green-600 hover:text-green-900 mr-2">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="text-blue-600 hover:text-blue-900">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Product Performance -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Top Selling Products -->
+                <div class="card bg-white rounded-lg p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold text-gray-800">Top Selling Products</h2>
+                        <a href="#" class="text-sm text-green-600 hover:underline">View All</a>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/6b6834bb-310b-49cd-a125-75a10945c966.png" alt="Organic rice product" class="w-10 h-10 rounded-full object-cover">
+                            </div>
+                            <div class="ml-4 flex-grow">
+                                <p class="text-sm font-medium text-gray-900">Organic Rice</p>
+                                <p class="text-sm text-gray-500">Crops</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm font-semibold text-green-600">TZS 2,200/kg</p>
+                                <p class="text-xs text-gray-500">120 sold</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/29cca133-b5cd-400e-9e3b-f69319bf796b.png" alt="Pure honey product" class="w-10 h-10 rounded-full object-cover">
+                            </div>
+                            <div class="ml-4 flex-grow">
+                                <p class="text-sm font-medium text-gray-900">Pure Honey</p>
+                                <p class="text-sm text-gray-500">Honey & Bee Products</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm font-semibold text-green-600">TZS 5,000/500g</p>
+                                <p class="text-xs text-gray-500">98 sold</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/1b2da4d7-47dc-4997-a356-58e546d8c674.png" alt="Solar panel product" class="w-10 h-10 rounded-full object-cover">
+                            </div>
+                            <div class="ml-4 flex-grow">
+                                <p class="text-sm font-medium text-gray-900">300W Solar Panel</p>
+                                <p class="text-sm text-gray-500">Solar Panels</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm font-semibold text-green-600">TZS 125,000</p>
+                                <p class="text-xs text-gray-500">25 sold</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/7218ca6e-3bea-4e5a-be3f-07fb8b237889.png" alt="Premium maize product" class="w-10 h-10 rounded-full object-cover">
+                            </div>
+                            <div class="ml-4 flex-grow">
+                                <p class="text-sm font-medium text-gray-900">Premium Maize</p>
+                                <p class="text-sm text-gray-500">Crops</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm font-semibold text-green-600">TZS 1,500/kg</p>
+                                <p class="text-xs text-gray-500">87 sold</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3e056734-25e6-4e75-83b9-c94bdde1b8f4.png" alt="Goats milk product" class="w-10 h-10 rounded-full object-cover">
+                            </div>
+                            <div class="ml-4 flex-grow">
+                                <p class="text-sm font-medium text-gray-900">Goat's Milk</p>
+                                <p class="text-sm text-gray-500">Livestock Products</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm font-semibold text-green-600">TZS 1,800/liter</p>
+                                <p class="text-xs text-gray-500">65 sold</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent Activity -->
+                <div class="card bg-white rounded-lg p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold text-gray-800">Recent Activity</h2>
+                        <a href="#" class="text-sm text-green-600 hover:underline">View All</a>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                                    <i class="fas fa-user-plus"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-900">New customer registered</p>
+                                <p class="text-sm text-gray-500">John Smith registered on the website</p>
+                                <p class="text-xs text-gray-400 mt-1">2 minutes ago</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-900">New order received</p>
+                                <p class="text-sm text-gray-500">Order #KN-2549 worth TZS 187,500</p>
+                                <p class="text-xs text-gray-400 mt-1">25 minutes ago</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="h-10 w-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600">
+                                    <i class="fas fa-box-open"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-900">Inventory updated</p>
+                                <p class="text-sm text-gray-500">Stock level for Pure Honey adjusted to 95 units</p>
+                                <p class="text-xs text-gray-400 mt-1">1 hour ago</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="h-10 w-10 rounded-full bg-red-100 flex items-center justify-center text-red-600">
+                                    <i class="fas fa-exchange-alt"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-900">Order returned</p>
+                                <p class="text-sm text-gray-500">Order #KN-2532 returned by customer</p>
+                                <p class="text-xs text-gray-400 mt-1">3 hours ago</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
+                                    <i class="fas fa-comment"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-900">New customer review</p>
+                                <p class="text-sm text-gray-500">Robert Johnson rated 5 stars for Organic Rice</p>
+                                <p class="text-xs text-gray-400 mt-1">5 hours ago</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-white border-t border-gray-200 p-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <p class="text-sm text-gray-500 mb-2 md:mb-0">© 2024 KNC Company Limited. All rights reserved.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-sm text-gray-500 hover:text-gray-700">Privacy Policy</a>
+                    <a href="#" class="text-sm text-gray-500 hover:text-gray-700">Terms of Service</a>
+                    <a href="#" class="text-sm text-gray-500 hover:text-gray-700">Contact Support</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Loading animation
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                document.body.classList.add('loaded');
+            }, 500);
+        });
+        // Toggle sidebar collapse with localStorage
+        document.getElementById('toggle-sidebar').addEventListener('click', function() {
+            document.body.classList.toggle('sidebar-collapsed');
+            localStorage.setItem('sidebarCollapsed', document.body.classList.contains('sidebar-collapsed'));
+        });
+
+        // Check for saved sidebar preference
+        if (localStorage.getItem('sidebarCollapsed') === 'true') {
+            document.body.classList.add('sidebar-collapsed');
+        }
+        
+        // Toggle dark mode with full implementation
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            html.classList.toggle('dark');
+            localStorage.setItem('darkMode', html.classList.contains('dark'));
+        }
+
+        // Check for saved dark mode preference
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.documentElement.classList.add('dark');
+        }
+        
+        // Initialize tooltips
+        document.addEventListener('DOMContentLoaded', function() {
+            // In a real implementation, you would initialize tooltip library here
+            // For example: tippy('[data-tippy-content]');
+        });
+    </script>
+</body>
+</html>

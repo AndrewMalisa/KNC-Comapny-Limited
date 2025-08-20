@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KNC Company Limited - Agricultural Products & Natural Resources</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .hero-bg {
+            background: linear-gradient(135deg, #065f46 0%, #10b981 100%);
+        }
+        
+        .product-card {
+            transition: all 0.3s ease;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .admin-panel {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+        }
+        
+        .stock-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ef4444;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+        
+        .stock-badge.in-stock {
+            background: #10b981;
+        }
+        
+        .stock-badge.low-stock {
+            background: #f59e0b;
+        }
+        
+        .category-icon {
+            width: 60px;
+            height: 60px;
+            background: #f3f4f6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .editable {
+            border: 2px dashed transparent;
+            padding: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .editable:hover {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+        
+        .edit-mode .editable {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-2xl font-bold text-green-600 editable" contenteditable="false">KNC Company Limited</h1>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#home" class="text-gray-900 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="#about" class="text-gray-900 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium">About</a>
+                        <a href="#products" class="text-gray-900 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium">Products</a>
+                        <a href="#contact" class="text-gray-900 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+                        <button onclick="toggleEditMode()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                            <i class="fas fa-edit mr-1"></i> Edit Mode
+                        </button>
+                        <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                            <i class="fas fa-cog mr-1"></i><a href = "Admin.html">Admin</a>
+                        </button>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-gray-900 hover:text-green-600">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white shadow-lg">
+                <a href="#home" class="text-gray-900 hover:text-green-600 block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="#about" class="text-gray-900 hover:text-green-600 block px-3 py-2 rounded-md text-base font-medium">About</a>
+                <a href="#products" class="text-gray-900 hover:text-green-600 block px-3 py-2 rounded-md text-base font-medium">Products</a>
+                <a href="#contact" class="text-gray-900 hover:text-green-600 block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+                <button onclick="toggleEditMode()" class="w-full text-left bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-md text-base font-medium">
+                    <i class="fas fa-edit mr-1"></i> Edit Mode
+                </button>
+                <button onclick="openAdminPanel()" class="w-full text-left bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-md text-base font-medium">
+                    <i class="fas fa-cog mr-1"></i> Admin
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg text-white py-32 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="fade-in">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 editable" contenteditable="false">
+                    Premium Agricultural Products & Natural Resources
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto editable" contenteditable="false">
+                    KNC Company Limited is your trusted partner for high-quality agricultural products, natural resources, and sustainable solutions across Tanzania and beyond.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="scrollToProducts()" class="bg-white text-green-600 hover:bg-gray-100 px-8 py-3 rounded-lg font-semibold text-lg transition duration-300">
+                        <i class="fas fa-leaf mr-2"></i> Explore Products
+                    </button>
+                    <button onclick="scrollToContact()" class="border-2 border-white text-white hover:bg-white hover:text-green-600 px-8 py-3 rounded-lg font-semibold text-lg transition duration-300">
+                        <i class="fas fa-phone mr-2"></i> Contact Us
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4 editable" contenteditable="false">About KNC Company Limited</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto editable" contenteditable="false">
+                    We are a leading company in Tanzania specializing in the production, buying, and selling of agricultural products and natural resources. Our commitment to quality and sustainability drives everything we do.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="category-icon">
+                        <i class="fas fa-seedling text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 editable" contenteditable="false">Agricultural Excellence</h3>
+                    <p class="text-gray-600 editable" contenteditable="false">Premium crops and agricultural products sourced from the finest farms</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="category-icon">
+                        <i class="fas fa-industry text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 editable" contenteditable="false">Natural Resources</h3>
+                    <p class="text-gray-600 editable" contenteditable="false">Sustainable extraction and processing of natural resources</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="category-icon">
+                        <i class="fas fa-solar-panel text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 editable" contenteditable="false">Clean Energy</h3>
+                    <p class="text-gray-600 editable" contenteditable="false">Solar panels and renewable energy solutions</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="category-icon">
+                        <i class="fas fa-globe-africa text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 editable" contenteditable="false">Regional Leader</h3>
+                    <p class="text-gray-600 editable" contenteditable="false">Serving Tanzania and expanding across East Africa</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4 editable" contenteditable="false">Our Products</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto editable" contenteditable="false">
+                    Discover our comprehensive range of agricultural products and natural resources, carefully selected and processed to meet the highest standards.
+                </p>
+            </div>
+
+            <!-- Product Categories -->
+            <div class="mb-8">
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button onclick="filterProducts('all')" class="filter-btn bg-green-600 text-white px-6 py-2 rounded-full font-medium hover:bg-green-700 transition duration-300">
+                        All Products
+                    </button>
+                    <button onclick="filterProducts('crops')" class="filter-btn bg-gray-200 text-gray-700 px-6 py-2 rounded-full font-medium hover:bg-gray-300 transition duration-300">
+                        Crops
+                    </button>
+                    <button onclick="filterProducts('honey')" class="filter-btn bg-gray-200 text-gray-700 px-6 py-2 rounded-full font-medium hover:bg-gray-300 transition duration-300">
+                        Honey & Bee Products
+                    </button>
+                    <button onclick="filterProducts('livestock')" class="filter-btn bg-gray-200 text-gray-700 px-6 py-2 rounded-full font-medium hover:bg-gray-300 transition duration-300">
+                        Livestock Products
+                    </button>
+                    <button onclick="filterProducts('solar')" class="filter-btn bg-gray-200 text-gray-700 px-6 py-2 rounded-full font-medium hover:bg-gray-300 transition duration-300">
+                        Solar Panels
+                    </button>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Products will be dynamically loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4 editable" contenteditable="false">Contact Us</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto editable" contenteditable="false">
+                    Ready to partner with us? Get in touch to discuss your agricultural and natural resource needs.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                    <div class="mb-8">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9e56a592-7153-4a6a-8b10-1f38de0f84a7.png" alt="Modern KNC Company Limited office building in Dar es Salaam, Tanzania with glass facade and company signage, surrounded by landscaped gardens" class="w-full h-64 object-cover rounded-lg shadow-lg" />
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-map-marker-alt text-green-600 text-xl mt-1"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-semibold text-gray-900 editable" contenteditable="false">Our Location</h3>
+                                <p class="text-gray-600 editable" contenteditable="false">123 Agricultural Drive<br>Dar es Salaam, Tanzania</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-phone text-green-600 text-xl mt-1"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-semibold text-gray-900 editable" contenteditable="false">Phone</h3>
+                                <p class="text-gray-600 editable" contenteditable="false">+255 123 456 789</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-envelope text-green-600 text-xl mt-1"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-semibold text-gray-900 editable" contenteditable="false">Email</h3>
+                                <p class="text-gray-600 editable" contenteditable="false">info@knccompany.co.tz</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <form class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                            <input type="text" id="name" name="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent" required>
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                            <input type="email" id="email" name="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent" required>
+                        </div>
+                        
+                        <div>
+                            <label for="subject" class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
+                            <input type="text" id="subject" name="subject" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent" required>
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                            <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300">
+                            <i class="fas fa-paper-plane mr-2"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-green-400 mb-4 editable" contenteditable="false">KNC Company Limited</h3>
+                    <p class="text-gray-400 editable" contenteditable="false">
+                        Leading provider of agricultural products and natural resources in Tanzania and beyond.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 editable" contenteditable="false">Products</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="editable" contenteditable="false">Agricultural Crops</li>
+                        <li class="editable" contenteditable="false">Honey & Bee Wax</li>
+                        <li class="editable" contenteditable="false">Livestock Products</li>
+                        <li class="editable" contenteditable="false">Solar Panels</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 editable" contenteditable="false">Services</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="editable" contenteditable="false">Production</li>
+                        <li class="editable" contenteditable="false">Wholesale Trading</li>
+                        <li class="editable" contenteditable="false">Export Services</li>
+                        <li class="editable" contenteditable="false">Consulting</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 editable" contenteditable="false">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-green-400 transition duration-300">
+                            <i class="fab fa-facebook-f text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-green-400 transition duration-300">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-green-400 transition duration-300">
+                            <i class="fab fa-linkedin-in text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-green-400 transition duration-300">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p class="text-gray-400 editable" contenteditable="false">
+                    © 2024 KNC Company Limited. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Admin Panel Modal -->
+    <div id="admin-modal" class="modal">
+        <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="admin-panel text-white p-6 rounded-t-lg">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-bold">
+                        <i class="fas fa-cog mr-2"></i> Admin Panel
+                    </h2>
+                    <button onclick="closeAdminPanel()" class="text-white hover:text-gray-300">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="p-6">
+                <div class="mb-6">
+                    <div class="flex flex-wrap gap-4 mb-4">
+                        <button onclick="showAdminSection('products')" class="admin-tab bg-blue-600 text-white px-4 py-2 rounded font-medium">
+                            <i class="fas fa-box mr-2"></i> Manage Products
+                        </button>
+                        <button onclick="showAdminSection('add-product')" class="admin-tab bg-gray-200 text-gray-700 px-4 py-2 rounded font-medium">
+                            <i class="fas fa-plus mr-2"></i> Add Product
+                        </button>
+                        <button onclick="showAdminSection('stock')" class="admin-tab bg-gray-200 text-gray-700 px-4 py-2 rounded font-medium">
+                            <i class="fas fa-warehouse mr-2"></i> Stock Management
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Products Management -->
+                <div id="admin-products" class="admin-section">
+                    <h3 class="text-xl font-semibold mb-4">Product Management</h3>
+                    <div id="admin-products-list" class="space-y-4">
+                        <!-- Products list will be populated here -->
+                    </div>
+                </div>
+                
+                <!-- Add Product -->
+                <div id="admin-add-product" class="admin-section hidden">
+                    <h3 class="text-xl font-semibold mb-4">Add New Product</h3>
+                    <form id="add-product-form" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Product Name</label>
+                                <input type="text" id="product-name" class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-600" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                                <select id="product-category" class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-600" required>
+                                    <option value="">Select Category</option>
+                                    <option value="crops">Crops</option>
+                                    <option value="honey">Honey & Bee Products</option>
+                                    <option value="livestock">Livestock Products</option>
+                                    <option value="solar">Solar Panels</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Price (TZS)</label>
+                                <input type="number" id="product-price" class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-600" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Stock Quantity</label>
+                                <input type="number" id="product-stock" class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-600" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                            <textarea id="product-description" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-600" required></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Image Alt Text (for auto-generation)</label>
+                            <input type="text" id="product-image-alt" class="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-600" placeholder="Describe the product image in detail" required>
+                        </div>
+                        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded font-medium">
+                            <i class="fas fa-plus mr-2"></i> Add Product
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Stock Management -->
+                <div id="admin-stock" class="admin-section hidden">
+                    <h3 class="text-xl font-semibold mb-4">Stock Management</h3>
+                    <div id="stock-overview" class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <!-- Stock overview cards will be populated here -->
+                    </div>
+                    <div id="stock-details" class="overflow-x-auto">
+                        <!-- Stock details table will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let isEditMode = false;
+        let currentFilter = 'all';
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeProducts();
+            loadProducts();
+            initializeEventListeners();
+        });
+        
+        // Initialize default products if not exists
+        function initializeProducts() {
+            if (!localStorage.getItem('kncProducts')) {
+                const defaultProducts = [
+                    {
+                        id: 1,
+                        name: 'Premium Maize',
+                        category: 'crops',
+                        price: 1500,
+                        stock: 500,
+                        description: 'High-quality maize from the best farms in Tanzania. Perfect for both human consumption and animal feed.',
+                        imageAlt: 'Golden yellow maize kernels in burlap sacks displayed in a clean warehouse setting with KNC Company branding'
+                    },
+                    {
+                        id: 2,
+                        name: 'Organic Rice',
+                        category: 'crops',
+                        price: 2200,
+                        stock
