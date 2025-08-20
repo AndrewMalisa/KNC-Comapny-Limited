@@ -1,0 +1,32 @@
+# Config files with sensitive data
+config/config.php
+config/database.php
+config/.env
+
+# PHP session or cache files
+*.session
+cache/
+tmp/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Backup or swap files
+*.bak
+*.old
+*.swp
+
+# Editor/IDE folders
+.vscode/
+.idea/
+
+# Optional: uploads or user-generated content
+uploads/
+
+# Node modules (if you use any frontend tools in the future)
+node_modules/
+
+# Compiled CSS/JS (if using build tools)
+dist/
+build/

@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin User Management - FarmFresh Market</title>
+    <link rel="stylesheet" href="../main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Ffarmfresh2987back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.6"></script>
+</head>
+<body class="bg-background min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-organic sticky top-0 z-50">
+        <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="admin_dashboard.html" class="flex items-center space-x-2">
+                        <svg class="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
+                            <path d="M19 15L20.09 21.26L27 22L20.09 22.74L19 29L17.91 22.74L11 22L17.91 21.26L19 15Z"/>
+                            <path d="M5 15L6.09 21.26L13 22L6.09 22.74L5 29L3.91 22.74L-3 22L3.91 21.26L5 15Z"/>
+                        </svg>
+                        <span class="font-heading font-bold text-xl text-primary">FarmFresh</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <!-- <nav class="hidden md:flex items-center space-x-6">
+                    <a href="product_catalog.html" class="text-text-secondary hover:text-primary transition-organic">Products</a>
+                    <a href="admin_dashboard.html" class="text-text-secondary hover:text-primary transition-organic">Dashboard</a>
+                    <a href="admin_user_management.html" class="text-primary font-medium">User Management</a>
+                    <a href="admin_product_management.html" class="text-text-secondary hover:text-primary transition-organic">Product Management</a>
+                </nav> -->
+
+                <!-- Admin Profile -->
+                <div class="flex items-center space-x-4">
+                    <div class="hidden md:flex items-center space-x-3">
+                        <div class="text-right">
+                            <p class="text-sm font-medium text-text-primary">Kaiza Sossa</p>
+                            <p class="text-xs text-text-secondary">Administrator</p>
+                        </div>
+                        <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                            <span class="text-white text-sm font-medium">KS</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile Menu Button -->
+                    <button class="md:hidden p-2 text-text-secondary hover:text-primary transition-organic" onclick="toggleMobileMenu()">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-white border-t border-gray-200">
+            <nav class="px-4 py-4 space-y-2">
+                <a href="product_catalog.html" class="block py-2 text-text-secondary hover:text-primary transition-organic">Products</a>
+                <a href="admin_dashboard.html" class="block py-2 text-text-secondary hover:text-primary transition-organic">Dashboard</a>
+                <a href="admin_user_management.html" class="block py-2 text-primary font-medium">User Management</a>
+                <a href="admin_product_management.html" class="block py-2 text-text-secondary hover:text-primary transition-organic">Product Management</a>
+            </nav>
+        </div> 
+    </header>
+
+    <div class="flex min-h-screen">
+        <!-- Desktop Sidebar -->
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-organic-lg transform -translate-x-full lg:translate-x-0 lg:static lg:inset-0 transition-organic-slow">
+            <div class="flex flex-col h-full pt-16 lg:pt-0">
+                <!-- Sidebar Header -->
+                <div class="p-6 border-b border-gray-200">
+                    <nav class="text-sm text-text-secondary">
+                        <a href="admin_dashboard.html" class="text-primary font-medium">Admin</a>
+                        <span class="mx-2">></span>
+                        <span>Dashboard</span>
+                    </nav>
+                </div>
+
+                <!-- Navigation Menu -->
+                <nav class="flex-1 px-4 py-6 space-y-2">
+                    <a href="admin_dashboard.html" class="flex items-center space-x-3 px-3 py-2 rounded-organic bg-primary-100 text-primary font-medium">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v6H8V5z"/>
+                        </svg>
+                        <span>Dashboard</span>
+                    </a>
+
+                    <a href="admin_user_management.html" class="flex items-center space-x-3 px-3 py-2 rounded-organic text-text-secondary hover:bg-gray-50 hover:text-primary transition-organic">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>
+                        </svg>
+                        <span>Users</span>
+                        <span class="ml-auto bg-secondary-100 text-secondary-800 text-xs px-2 py-1 rounded-full">24</span>
+                    </a>
+
+                    <a href="admin_product_management.html" class="flex items-center space-x-3 px-3 py-2 rounded-organic text-text-secondary hover:bg-gray-50 hover:text-primary transition-organic">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                        </svg>
+                        <span>Products</span>
+                        <span class="ml-auto bg-primary-100 text-primary-800 text-xs px-2 py-1 rounded-full">18</span>
+                    </a>
+
+                    <a href="javascript:void(0)" class="flex items-center space-x-3 px-3 py-2 rounded-organic text-text-secondary hover:bg-gray-50 hover:text-primary transition-organic">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                        </svg>
+                        <span>Categories</span>
+                        <span class="ml-auto bg-accent-100 text-accent-800 text-xs px-2 py-1 rounded-full">4</span>
+                    </a>
+
+                    <a href="javascript:void(0)" class="flex items-center space-x-3 px-3 py-2 rounded-organic text-text-secondary hover:bg-gray-50 hover:text-primary transition-organic">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                        </svg>
+                        <span>Orders</span>
+                        <span class="ml-auto bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full">7</span>
+                    </a>
+
+                    <div class="pt-4 border-t border-gray-200 mt-4">
+                        <a href="product_catalog.html" class="flex items-center space-x-3 px-3 py-2 rounded-organic text-text-secondary hover:bg-gray-50 hover:text-primary transition-organic">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                            </svg>
+                            <span>View Store</span>
+                        </a>
+
+                        <a href="javascript:void(0)" class="flex items-center space-x-3 px-3 py-2 rounded-organic text-text-secondary hover:bg-gray-50 hover:text-primary transition-organic">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            <span>Settings</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="flex-1 p-4 lg:p-8">
+            <!-- Page Header -->
+            <div class="mb-8">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                        <h1 class="font-heading font-bold text-3xl text-text-primary mb-2">User Management</h1>
+                        <p class="text-text-secondary">Manage customer accounts and user data</p>
+                    </div>
+                    <div class="mt-4 sm:mt-0 flex items-center space-x-3">
+                        <button onclick="exportUsers()" class="bg-secondary text-white px-4 py-2 rounded-organic hover:bg-secondary-700 transition-organic flex items-center space-x-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            <span>Export Users</span>
+                        </button>
+                        <div class="relative">
+                            <button onclick="toggleBulkActions()" class="bg-primary text-white px-4 py-2 rounded-organic hover:bg-primary-700 transition-organic flex items-center space-x-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"/>
+                                </svg>
+                                <span>Bulk Actions</span>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </button>
+                            <div id="bulkActionsMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-organic-lg shadow-organic-lg border border-gray-200 z-10">
+                                <div class="py-1">
+                                    <button onclick="bulkActivate()" class="block w-full text-left px-4 py-2 text-sm text-text-primary hover:bg-gray-50">Activate Selected</button>
+                                    <button onclick="bulkDeactivate()" class="block w-full text-left px-4 py-2 text-sm text-text-primary hover:bg-gray-50">Deactivate Selected</button>
+                                    <button onclick="bulkEmail()" class="block w-full text-left px-4 py-2 text-sm text-text-primary hover:bg-gray-50">Send Email Campaign</button>
+                                    <button onclick="bulkExport()" class="block w-full text-left px-4 py-2 text-sm text-text-primary hover:bg-gray-50">Export Selected</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search and Filters -->
+            <div class="bg-white rounded-organic-lg shadow-organic p-6 mb-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Search -->
+                    <div class="lg:col-span-2">
+                        <label class="block text-sm font-medium text-text-primary mb-2">Search Users</label>
+                        <div class="relative">
+                            <input type="text" id="searchInput" placeholder="Search by name, email, or phone..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-organic focus:ring-2 focus:ring-primary focus:border-transparent" onkeyup="filterUsers()" />
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Status Filter -->
+                    <div>
+                        <label class="block text-sm font-medium text-text-primary mb-2">Account Status</label>
+                        <select id="statusFilter" onchange="filterUsers()" class="w-full border border-gray-300 rounded-organic px-3 py-2 focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <option value>All Status</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="suspended">Suspended</option>
+                        </select>
+                    </div>
+
+                    <!-- Registration Date Filter -->
+                    <div>
+                        <label class="block text-sm font-medium text-text-primary mb-2">Registration Date</label>
+                        <select id="dateFilter" onchange="filterUsers()" class="w-full border border-gray-300 rounded-organic px-3 py-2 focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <option value>All Time</option>
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                            <option value="year">This Year</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mt-4 flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <span class="text-sm text-text-secondary">
+                            Showing <span id="userCount">8</span> users
+                        </span>
+                        <button onclick="clearFilters()" class="text-sm text-primary hover:text-primary-700 transition-organic">
+                            Clear Filters
+                        </button>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" id="selectAll" onchange="toggleSelectAll()" class="rounded border-gray-300 text-primary focus:ring-primary" />
+                            <span class="ml-2 text-sm text-text-secondary">Select All</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Desktop Users Table -->
+            <div class="hidden lg:block bg-white rounded-organic-lg shadow-organic overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <input type="checkbox" class="rounded border-gray-300 text-primary focus:ring-primary" />
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Registration</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Orders</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200" id="usersTableBody">
+                            <!-- User Row 1 -->
+                            <tr class="hover:bg-gray-50 transition-organic user-row" data-status="active" data-date="2025-08-15" data-search="sarah johnson sarah.johnson@email.com +1-555-0123">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <input type="checkbox" class="user-checkbox rounded border-gray-300 text-primary focus:ring-primary" />
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10">
+                                            <div class="h-10 w-10 rounded-full bg-primary-100 flex items-center justify-center">
+                                                <span class="text-primary font-medium">SJ</span>
+                                            </div>
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-text-primary">Sarah Johnson</div>
+                                            <div class="text-sm text-text-secondary">Customer ID: #USR001</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-text-primary">sarah.johnson@email.com</div>
+                                    <div class="text-sm text-text-secondary">+1-555-0123</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-text-primary">Aug 15, 2025</div>
+                                    <div class="text-sm text-text-secondary">4 days ago</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-text-primary font-medium">12 orders</div>
+                                    <div class="text-sm text-text-secondary">$248.50 total</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        Active
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <div class="flex items-center space-x-2">
+                                        <button onclick="viewUserProfile('USR001')" class="text-primary hover:text-primary-700 transition-organic">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                            </svg>
+                                        </button>
+                                        <a href="https://wa.me/15550123?text=Hi Sarah! This is FarmFresh Market reaching out regarding your account." target="_blank" class="text-green-600 hover:text-green-700 transition-organic">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                                            </svg>
+                                        </a>
+                                        <button onclick="toggleUserStatus('USR001', 'active')" class="text-secondary hover:text-secondary-700 transition-organic">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636m12.728 12.728L18.364 5.636M5.636 18.364l12.728-12.728"/>
+                                            </svg>
+                                        </button>
+                                        <button onclick="resetPassword('USR001')" class="text-gray-600 hover:text-gray-700 transition-organic">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- User Row 2 -->
+                            <tr class="hover:bg-gray-50 transition-organic user-row" data-status="active" data-date="2025-08-12" data-search="michael chen michael.chen@email.com +1-555-0456">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <input type="checkbox" class="user-checkbox rounded border-gray-300 text-primary focus:ring-primary" />
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10">
+                                            <div class="h-10 w-10 rounded-full bg-secondary-100 flex items-center justify-center">
+                                                <span class="text-secondary font-medium">MC</span>
+                                            </div>
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-text-primary">Michael Chen</div>
+                                            <div class="text-sm text-text-secondary">Customer ID: #USR002</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-text-primary">michael.chen@email.com</div>
+                                    <div class="text-sm text-text-secondary">+1-555-0456</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-text-primary">Aug 12, 2025</div>
+                                    <div class="text-sm text-text-secondary">7 days ago</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-text-primary font-medium">8 orders</div>
+                                    <div class="text-sm text-text-secondary">$156.75 total</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        Active
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <div class="flex items-center space-x-2">
+                                        <button onclick="viewUserProfile('USR002')" class="text-primary hover:text-primary-700 transition-organic">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                            </svg>
+                                        </button>
+                                        <a href="https://wa.me/15550456?text=Hi Michael! This is FarmFresh Market reaching out regarding your account." target="_blank" class="text-green-600 hover:text-green-700 transition-organic">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                                            </svg>
+                                        </a>
+                                        <button onclick="toggleUserStatus('USR002', 'active')" class="text-secondary hover:text-secondary-700 transition-organic">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636m12.728 12.728L18.364 5.636M5.636 18.364l12.728-12.728"/>
+                                            </svg>
+                                        </button>
+                                        <button onclick="resetPassword('USR002')" class="text-gray-600 hover:text-gray-700 transition-organic">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- User Row 3 -->
+                            <tr class="hover:bg-gray-50 transition-organic user-row" data-status="inactive" data-date="2025-08-10" data-search="emily davis emily.davis@email.com +1-555-0789">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <input type="checkbox" class="user-checkbox rounded border-gray-300 text-primary focus:ring-primary" />
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10">
+                                            <div class="h-10 w-10 rounded-full bg-accent-100 flex items-center justify-center">
+                                                <span class="text-accent-800 font-medium">ED</span>
+                                            </div>
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-text-primary">Emily Davis</div>
+                                            <div class="text-sm text-text-secondary">Customer ID: #USR003</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-text-primary">emily.davis@email.com</div>
+                                    <div class="text-sm text-text-secondary">+1-555-0789</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-text-primary">Aug 10, 2025</div>
+                                    <div class="text-sm text-text-secondary">9 days ago</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-text-primary font-medium">3 orders</div>
+                                    <div class="text-sm text-text-secondary">$89.25 total</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                                        Inactive
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <div class="flex items-center space-x-2">
+                                        <button onclick="viewUserProfile('USR003')" class="text-primary hover:text-primary-700 transition-organic">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                            </svg>
+                                        </button>
+                                        <a href="https://wa.me/15550789?text=Hi Emily! This is FarmFresh Market reaching out regarding your account." target="_blank" class="text-green-600 hover:text-green-700 transition-organic">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                                            </svg>
+                                        </a>
+                                        <button onclick="toggleUserStatus('USR003', 'inactive')" class="text-green-600 hover:text-green-700 transition-organic">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                        </button>
+                                        <button onclick="resetPassword('USR003')" class="text-gray-600 hover:text-gray-700 transition-organic">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- User Row 4 -->
+                            <tr class="hover:bg-gray-50 transition-organic user-row" data-status="suspended" data-date="2025-08-08" data-search="david wilson david.wilson@email.com +1-555-0321">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <input type="checkbox" class="user-checkbox rounded border-gray-300 text-primary focus:ring-primary" />
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10">
+                                            <div class="h-10 w-10 rounded-full bg-red-100 flex items-center justify-center">
+                                                <span class="text-red-800 font-medium">DW</span>
+                                            </div>
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-text-primary">David Wilson</div>
+                                            <div class="text-sm text-text-secondary">Customer ID: #USR004</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-text-primary">david.wilson@email.com</div>
+                                    <div class="text-sm text-text-secondary">+1-555-0321</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-text-primary">Aug 08, 2025</div>
+                                    <div class="text-sm text-text-secondary">11 days ago</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-text-primary font-medium">1 order</div>
+                                    <div class="text-sm text-text-secondary">$25.00 total</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                        Suspended
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <div class="flex items-center space-x-2">
+                                        <button onclick="viewUserProfile('USR004')" class="text-primary hover:text-primary-700 transition-organic">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                            </svg>
+                                        </button>
+                                        <a href="https://wa.me/15550321?text=Hi David! This is FarmFresh Market reaching out regarding your account." target="_blank" class="text-green-600 hover:text-green-700 transition-organic">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                                            </svg>
+                                        </a>
+                                        <button onclick="toggleUserStatus('USR004', 'suspended')" class="text-green-600 hover:text-green-700 transition-organic">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                        </button>
+                                        <button onclick="resetPassword('USR004')" class="text-gray-600 hover:text-gray-700 transition-organic">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1721 9z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Additional User Rows -->
+                            <tr class="hover:bg-gray-50 transition-organic user-row" data-status="active" data-date="2025-08-05" data-search="lisa martinez lisa.martinez@email.com +1-555-0654">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <input type="checkbox" class="user-checkbox rounded border-gray-300 text-primary focus:ring-primary" />
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10">
+                                            <div class="h-10 w-10 rounded-full bg-primary-100 flex items-center justify-center">
+                                                <span class="text-primary font-medium">LM</span>
+                                            </div>
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-text-primary">Lisa Martinez</div>
+                                            <div class="text-sm text-text-secondary">Customer ID: #USR005</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-text-primary">lisa.martinez@email.com</div>
+                                    <div class="text-sm text-text-secondary">+1-555-0654</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-text-primary">Aug 05, 2025</div>
+                                    <div class="text-sm text-text-secondary">14 days ago</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-text-primary font-medium">15 orders</div>
+                                    <div class="text-sm text-text-secondary">$342.80 total</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        Active
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <div class="flex items-center space-x-2">
+                                        <button onclick="viewUserProfile('USR005')" class="text-primary hover:text-primary-700 transition-organic">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                            </svg>
+                                        </button>
+                                        <a href="https://wa.me/15550654?text=Hi Lisa! This is FarmFresh Market reaching out regarding your account." target="_blank" class="text-green-600 hover:text-green-700 transition-organic">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                                            </svg>
+                                        </a>
+                                        <button onclick="toggleUserStatus('USR005', 'active')" class="text-secondary hover:text-secondary-700 transition-organic">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636m12.728 12.728L18.364 5.636M5.636 18.364l12.728-12.728"/>
+                                            </svg>
+                                        </button>
+                                        <button onclick="resetPassword('USR005')" class="text-gray-600 hover:text-gray-700 transition-organic">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1721 9z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Mobile User Cards -->
+            <div class="lg:hidden space-y-4" id="mobileUserCards">
+                <!-- Mobile User Card 1 -->
+                <div class="bg-white rounded-organic-lg shadow-organic p-4 user-card" data-status="active" data-date="2025-08-15" data-search="sarah johnson sarah.johnson@email.com +1-555-0123">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="flex items-center space-x-3">
+                            <input type="checkbox" class="user-checkbox rounded border-gray-300 text-primary focus:ring-primary" />
+                            <div class="flex-shrink-0 h-12 w-12">
+                                <div class="h-12 w-12 rounded-full bg-primary-100 flex items-center justify-center">
+                                    <span class="text-primary font-medium">SJ</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-text-primary">Sarah Johnson</h3>
+                                <p class="text-sm text-text-secondary">#USR001</p>
+                            </div>
+                        </div>
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                            Active
+                        </span>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <p class="text-xs text-text-secondary">Email</p>
+                            <p class="text-sm text-text-primary">sarah.johnson@email.com</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-text-secondary">Phone</p>
+                            <p class="text-sm text-text-primary">+1-555-0123</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-text-secondary">Orders</p>
+                            <p class="text-sm text-text-primary font-medium">12 orders</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-text-secondary">Total Spent</p>
+                            <p class="text-sm text-text-primary font-medium">$248.50</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <p class="text-xs text-text-secondary">Registered Aug 15, 2025</p>
+                        <div class="flex items-center space-x-2">
+                            <button onclick="viewUserProfile('USR001')" class="p-2 text-primary hover:bg-primary-50 rounded-organic transition-organic">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                </svg>
+                            </button>
+                            <a href="https://wa.me/15550123?text=Hi Sarah! This is FarmFresh Market reaching out regarding your account." target="_blank" class="p-2 text-green-600 hover:bg-green-50 rounded-organic transition-organic">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                                </svg>
+                            </a>
+                            <button onclick="toggleUserStatus('USR001', 'active')" class="p-2 text-secondary hover:bg-secondary-50 rounded-organic transition-organic">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636m12.728 12.728L18.364 5.636M5.636 18.364l12.728-12.728"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile User Card 2 -->
+                <div class="bg-white rounded-organic-lg shadow-organic p-4 user-card" data-status="active" data-date="2025-08-12" data-search="michael chen michael.chen@email.com +1-555-0456">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="flex items-center space-x-3">
+                            <input type="checkbox" class="user-checkbox rounded border-gray-300 text-primary focus:ring-primary" />
+                            <div class="flex-shrink-0 h-12 w-12">
+                                <div class="h-12 w-12 rounded-full bg-secondary-100 flex items-center justify-center">
+                                    <span class="text-secondary font-medium">MC</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-text-primary">Michael Chen</h3>
+                                <p class="text-sm text-text-secondary">#USR002</p>
+                            </div>
+                        </div>
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                            Active
+                        </span>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <p class="text-xs text-text-secondary">Email</p>
+                            <p class="text-sm text-text-primary">michael.chen@email.com</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-text-secondary">Phone</p>
+                            <p class="text-sm text-text-primary">+1-555-0456</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-text-secondary">Orders</p>
+                            <p class="text-sm text-text-primary font-medium">8 orders</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-text-secondary">Total Spent</p>
+                            <p class="text-sm text-text-primary font-medium">$156.75</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <p class="text-xs text-text-secondary">Registered Aug 12, 2025</p>
+                        <div class="flex items-center space-x-2">
+                            <button onclick="viewUserProfile('USR002')" class="p-2 text-primary hover:bg-primary-50 rounded-organic transition-organic">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                </svg>
+                            </button>
+                            <a href="https://wa.me/15550456?text=Hi Michael! This is FarmFresh Market reaching out regarding your account." target="_blank" class="p-2 text-green-600 hover:bg-green-50 rounded-organic transition-organic">
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                                </svg>
+                            </a>
+                            <button onclick="toggleUserStatus('USR002', 'active')" class="p-2 text-secondary hover:bg-secondary-50 rounded-organic transition-organic">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636m12.728 12.728L18.364 5.636M5.636 18.364l12.728-12.728"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional mobile cards would follow the same pattern -->
+            </div>
+
+            <!-- Pagination -->
+            <div class="mt-8 flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <span class="text-sm text-text-secondary">Showing 1 to 8 of 24 users</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button class="px-3 py-2 text-sm border border-gray-300 rounded-organic hover:bg-gray-50 transition-organic">
+                        Previous
+                    </button>
+                    <button class="px-3 py-2 text-sm bg-primary text-white rounded-organic">1</button>
+                    <button class="px-3 py-2 text-sm border border-gray-300 rounded-organic hover:bg-gray-50 transition-organic">2</button>
+                    <button class="px-3 py-2 text-sm border border-gray-300 rounded-organic hover:bg-gray-50 transition-organic">3</button>
+                    <button class="px-3 py-2 text-sm border border-gray-300 rounded-organic hover:bg-gray-50 transition-organic">
+                        Next
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- User Profile Modal -->
+    <div id="userProfileModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="fixed inset-0 flex items-center justify-center p-4">
+            <div class="bg-white rounded-organic-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="font-heading font-semibold text-xl">User Profile</h3>
+                        <button onclick="closeUserProfile()" class="text-text-secondary hover:text-text-primary">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div id="userProfileContent">
+                        <!-- Profile content will be dynamically loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        function toggleBulkActions() {
+            const menu = document.getElementById('bulkActionsMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        function filterUsers() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilter').value;
+            const dateFilter = document.getElementById('dateFilter').value;
+            
+            const userRows = document.querySelectorAll('.user-row');
+            const userCards = document.querySelectorAll('.user-card');
+            let visibleCount = 0;
+
+            // Filter desktop table rows
+            userRows.forEach(row => {
+                const searchData = row.getAttribute('data-search').toLowerCase();
+                const status = row.getAttribute('data-status');
+                const date = row.getAttribute('data-date');
+                
+                let showRow = true;
+                
+                // Search filter
+                if (searchTerm && !searchData.includes(searchTerm)) {
+                    showRow = false;
+                }
+                
+                // Status filter
+                if (statusFilter && status !== statusFilter) {
+                    showRow = false;
+                }
+                
+                // Date filter (simplified for demo)
+                if (dateFilter && dateFilter !== 'all') {
+                    // In a real app, you'd implement proper date filtering
+                    showRow = true;
+                }
+                
+                if (showRow) {
+                    row.style.display = '';
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            // Filter mobile cards
+            userCards.forEach(card => {
+                const searchData = card.getAttribute('data-search').toLowerCase();
+                const status = card.getAttribute('data-status');
+                
+                let showCard = true;
+                
+                if (searchTerm && !searchData.includes(searchTerm)) {
+                    showCard = false;
+                }
+                
+                if (statusFilter && status !== statusFilter) {
+                    showCard = false;
+                }
+                
+                if (showCard) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            document.getElementById('userCount').textContent = visibleCount;
+        }
+
+        function clearFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('statusFilter').value = '';
+            document.getElementById('dateFilter').value = '';
+            filterUsers();
+        }
+
+        function toggleSelectAll() {
+            const selectAll = document.getElementById('selectAll');
+            const checkboxes = document.querySelectorAll('.user-checkbox');
+            
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = selectAll.checked;
+            });
+        }
+
+        function viewUserProfile(userId) {
+            // Mock user profile data
+            const userProfiles = {
+                'USR001': {
+                    name: 'Sarah Johnson',
+                    email: 'sarah.johnson@email.com',
+                    phone: '+1-555-0123',
+                    address: '123 Farm Road, Green Valley, CA 90210',
+                    registered: 'Aug 15, 2025',
+                    status: 'Active',
+                    orders: 12,
+                    totalSpent: '$248.50',
+                    lastLogin: 'Aug 18, 2025',
+                    favoriteProducts: ['Organic Tomatoes', 'Fresh Spinach', 'Farm Eggs']
+                }
+            };
+
+            const user = userProfiles[userId] || userProfiles['USR001'];
+            
+            const profileContent = `
+                <div class="flex items-center space-x-4 mb-6">
+                    <div class="h-16 w-16 rounded-full bg-primary-100 flex items-center justify-center">
+                        <span class="text-primary font-medium text-xl">${user.name.split(' ').map(n => n[0]).join('')}</span>
+                    </div>
+                    <div>
+                        <h4 class="font-heading font-semibold text-lg">${user.name}</h4>
+                        <p class="text-text-secondary">Customer ID: ${userId}</p>
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 mt-1">
+                            ${user.status}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <h5 class="font-medium text-text-primary mb-3">Contact Information</h5>
+                        <div class="space-y-2">
+                            <p class="text-sm"><span class="text-text-secondary">Email:</span> ${user.email}</p>
+                            <p class="text-sm"><span class="text-text-secondary">Phone:</span> ${user.phone}</p>
+                            <p class="text-sm"><span class="text-text-secondary">Address:</span> ${user.address}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h5 class="font-medium text-text-primary mb-3">Account Details</h5>
+                        <div class="space-y-2">
+                            <p class="text-sm"><span class="text-text-secondary">Registered:</span> ${user.registered}</p>
+                            <p class="text-sm"><span class="text-text-secondary">Last Login:</span> ${user.lastLogin}</p>
+                            <p class="text-sm"><span class="text-text-secondary">Total Orders:</span> ${user.orders}</p>
+                            <p class="text-sm"><span class="text-text-secondary">Total Spent:</span> ${user.totalSpent}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <h5 class="font-medium text-text-primary mb-3">Favorite Products</h5>
+                    <div class="flex flex-wrap gap-2">
+                        ${user.favoriteProducts.map(product => `
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-primary-100 text-primary-800">
+                                ${product}
+                            </span>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <a href="https://wa.me/${user.phone.replace(/[^\d]/g, '')}?text=Hi ${user.name.split(' ')[0]}! This is FarmFresh Market reaching out regarding your account." 
+                       target="_blank" 
+                       class="bg-green-600 text-white px-4 py-2 rounded-organic hover:bg-green-700 transition-organic flex items-center space-x-2">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                        </svg>
+                        <span>Contact via WhatsApp</span>
+                    </a>
+                    <button onclick="resetPassword('${userId}')" class="bg-secondary text-white px-4 py-2 rounded-organic hover:bg-secondary-700 transition-organic">
+                        Reset Password
+                    </button>
+                    <button onclick="toggleUserStatus('${userId}', '${user.status.toLowerCase()}')" class="bg-gray-100 text-text-secondary px-4 py-2 rounded-organic hover:bg-gray-200 transition-organic">
+                        ${user.status === 'Active' ? 'Deactivate' : 'Activate'} Account
+                    </button>
+                </div>
+            `;
+
+            document.getElementById('userProfileContent').innerHTML = profileContent;
+            document.getElementById('userProfileModal').classList.remove('hidden');
+        }
+
+        function closeUserProfile() {
+            document.getElementById('userProfileModal').classList.add('hidden');
+        }
+
+        function toggleUserStatus(userId, currentStatus) {
+            const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+            alert(`User ${userId} status changed to ${newStatus}`);
+            // In a real app, you'd make an API call here
+        }
+
+        function resetPassword(userId) {
+            if (confirm(`Are you sure you want to reset the password for user ${userId}?`)) {
+                alert(`Password reset email sent to user ${userId}`);
+                // In a real app, you'd make an API call here
+            }
+        }
+
+        function exportUsers() {
+            alert('Exporting users to CSV...');
+            // In a real app, you'd generate and download a CSV file
+        }
+
+        function bulkActivate() {
+            const selectedUsers = document.querySelectorAll('.user-checkbox:checked');
+            if (selectedUsers.length === 0) {
+                alert('Please select users to activate');
+                return;
+            }
+            alert(`Activating ${selectedUsers.length} selected users`);
+            toggleBulkActions();
+        }
+
+        function bulkDeactivate() {
+            const selectedUsers = document.querySelectorAll('.user-checkbox:checked');
+            if (selectedUsers.length === 0) {
+                alert('Please select users to deactivate');
+                return;
+            }
+            alert(`Deactivating ${selectedUsers.length} selected users`);
+            toggleBulkActions();
+        }
+
+        function bulkEmail() {
+            const selectedUsers = document.querySelectorAll('.user-checkbox:checked');
+            if (selectedUsers.length === 0) {
+                alert('Please select users to email');
+                return;
+            }
+            alert(`Sending email campaign to ${selectedUsers.length} selected users`);
+            toggleBulkActions();
+        }
+
+        function bulkExport() {
+            const selectedUsers = document.querySelectorAll('.user-checkbox:checked');
+            if (selectedUsers.length === 0) {
+                alert('Please select users to export');
+                return;
+            }
+            alert(`Exporting ${selectedUsers.length} selected users`);
+            toggleBulkActions();
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            const bulkMenu = document.getElementById('bulkActionsMenu');
+            const bulkButton = event.target.closest('button[onclick="toggleBulkActions()"]');
+            
+            if (!bulkMenu.contains(event.target) && !bulkButton) {
+                bulkMenu.classList.add('hidden');
+            }
+
+            const modal = document.getElementById('userProfileModal');
+            const modalContent = modal.querySelector('.bg-white');
+            
+            if (modal.contains(event.target) && !modalContent.contains(event.target)) {
+                closeUserProfile();
+            }
+        });
+    </script>
+</body>
+</html>
