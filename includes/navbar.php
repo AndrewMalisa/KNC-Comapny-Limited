@@ -2,60 +2,58 @@
 $current_user = getCurrentUser();
 ?>
 
-<nav class="bg-farm-green-800 text-white shadow-lg">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex items-center">
-                <a href="index.php" class="flex items-center space-x-2">
-                    <i class="fas fa-shopping-bag text-2xl"></i>
-                    <span class="font-bold text-xl">KNC</span>
+<nav class="navbar">
+    <div class="container">
+        <div class="nav-content">
+            <div class="logo">
+                <a href="index.php" class="logo-link">
+                    <img src="assets/logo.png" alt="KNC Logo" class="logo-image">
+                    <!-- <span class="logo-text">KNC</span> -->
                 </a>
             </div>
 
             <!-- Desktop Navigation -->
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="index.php" class="hover:text-farm-green-200 transition-colors">Home</a>
-                <a href="products.php" class="hover:text-farm-green-200 transition-colors">Products</a>
+            <div class="nav-links">
+                <a href="index.php" class="nav-item">Home</a>
+                <a href="products.php" class="nav-item">Products</a>
                 
                 <?php if ($current_user): ?>
-                    <a href="profile.php" class="hover:text-farm-green-200 transition-colors">Profile</a>
+                    <a href="profile.php" class="nav-item">Profile</a>
                     <?php if ($current_user['is_admin']): ?>
-                        <a href="admin/index.php" class="hover:text-farm-green-200 transition-colors">Admin</a>
+                        <a href="admin/index.php" class="nav-item">Admin</a>
                     <?php endif; ?>
-                    <a href="logout.php" class="hover:text-farm-green-200 transition-colors">
+                    <a href="logout.php" class="nav-item">
                         <i class="fas fa-sign-out-alt mr-1"></i>Logout
                     </a>
                 <?php else: ?>
-                    <a href="login.php" class="hover:text-farm-green-200 transition-colors">Login</a>
-                    <a href="signup.php" class="bg-farm-green-600 hover:bg-farm-green-700 px-4 py-2 rounded-md transition-colors">
-                        Sign Up
-                    </a>
+                    <a href="login.php" class="nav-item">Login</a>
+                    <a href="signup.php" class="btn-signup">Sign Up</a>
                 <?php endif; ?>
             </div>
 
             <!-- Mobile menu button -->
-            <div class="md:hidden flex items-center">
-                <button onclick="toggleMobileMenu()" class="text-white hover:text-farm-green-200">
-                    <i class="fas fa-bars text-xl" id="menu-icon"></i>
+            <div class="mobile-menu-btn">
+                <button onclick="toggleMobileMenu()" class="menu-btn">
+                    <i class="fas fa-bars" id="menu-icon"></i>
                 </button>
             </div>
         </div>
 
         <!-- Mobile Navigation -->
-        <div id="mobile-menu" class="md:hidden hidden">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="index.php" class="block px-3 py-2 hover:bg-farm-green-700 rounded-md">Home</a>
-                <a href="products.php" class="block px-3 py-2 hover:bg-farm-green-700 rounded-md">Products</a>
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <div class="mobile-links">
+                <a href="index.php" class="mobile-item">Home</a>
+                <a href="products.php" class="mobile-item">Products</a>
                 
                 <?php if ($current_user): ?>
-                    <a href="profile.php" class="block px-3 py-2 hover:bg-farm-green-700 rounded-md">Profile</a>
+                    <a href="profile.php" class="mobile-item">Profile</a>
                     <?php if ($current_user['is_admin']): ?>
-                        <a href="admin/index.php" class="block px-3 py-2 hover:bg-farm-green-700 rounded-md">Admin</a>
+                        <a href="admin/index.php" class="mobile-item">Admin</a>
                     <?php endif; ?>
-                    <a href="logout.php" class="block px-3 py-2 hover:bg-farm-green-700 rounded-md">Logout</a>
+                    <a href="logout.php" class="mobile-item">Logout</a>
                 <?php else: ?>
-                    <a href="login.php" class="block px-3 py-2 hover:bg-farm-green-700 rounded-md">Login</a>
-                    <a href="signup.php" class="block px-3 py-2 hover:bg-farm-green-700 rounded-md">Sign Up</a>
+                    <a href="login.php" class="mobile-item">Login</a>
+                    <a href="signup.php" class="mobile-item">Sign Up</a>
                 <?php endif; ?>
             </div>
         </div>
