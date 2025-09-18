@@ -12,11 +12,12 @@
 </head>
 <body class="bg-background min-h-screen">
     <!-- Header -->
-    <header class="bg-white shadow-organic sticky top-0 z-50">
+    <header class="bg-white shadow-organic top-0 z-50">
         <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
+            
             <div class="flex items-center justify-between h-16">
                 <!-- Logo -->
-                <div class="flex items-center">
+                <div class="flex items-center p-6">
                     <a href="admin_dashboard.html" class="flex items-center space-x-2">
                         <svg class="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
@@ -26,7 +27,6 @@
                         <span class="font-heading font-bold text-xl text-primary"></span>
                     </a>
                 </div>
-
                 <!-- Admin Info & Actions -->
                 <div class="flex items-center space-x-4">
                     <!-- Notifications -->
@@ -56,7 +56,7 @@
                         <span class="text-sm">Logout</span>
                     </button>
 
-                    <!-- Mobile Menu Button -->
+                    <!-- Mobile Menu Button-->
                     <button class="lg:hidden p-2 text-text-secondary hover:text-primary transition-organic" onclick="toggleSidebar()">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
@@ -69,7 +69,9 @@
 
     <div class="flex">
         <!-- Sidebar -->
+         
         <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-organic-lg transform -translate-x-full lg:translate-x-0 lg:static lg:inset-0 transition-organic-slow">
+             
             <div class="flex flex-col h-full pt-16 lg:pt-0">
                 <!-- Sidebar Header -->
                 <div class="p-6 border-b border-gray-200">
@@ -210,7 +212,7 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-text-secondary text-sm font-medium">Monthly Revenue</p>
-                                <p class="text-3xl font-bold text-text-primary mt-2">$2,847</p>
+                                <p class="text-3xl font-bold text-text-primary mt-2">Tsh 200,847</p>
                                 <p class="text-success text-sm mt-1">+8% from last month</p>
                             </div>
                             <div class="bg-accent-100 p-3 rounded-organic">
